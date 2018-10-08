@@ -43,13 +43,19 @@ function ejecutarTransaccion(transaccion, heroe) {
             break;
 
         case "actualizarLista":
-
+/*
             lista = traerListaHeroes();
             actualizarTabla(lista);
+            break;*/
+            traerListaHeroes(manejarActualizarLista);
             break;
-
     }
 
+}
+
+function manejarActualizarLista(l){
+    lista = l;
+    actualizarTabla(lista);
 }
 
 

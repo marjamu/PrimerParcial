@@ -16,7 +16,7 @@ var storage = multer.diskStorage({
 
 
 //app.use(express.static(__dirname));
-app.use(express.static(__dirname, {index: 'login.html'}))
+app.use(express.static(__dirname, {index: 'index.html'}))
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -110,7 +110,6 @@ io.on('connection', function(socket){
 }); 
 
 app.get('/traer', function (req, res) {
-
     var url = require('url');
     var parts = url.parse(req.url, true);
     var query = parts.query;
@@ -159,79 +158,50 @@ app.post('/upload', function(req, res) {
 	})
 
 })
-app.post('/agregar',verifyToken,multer({storage: storage}).single('txtFile'), function (req, res) {
-//app.post('/agregar',verifyToken, function (req, res) {
-    //codigo para subir archivo
+app.post('/agregar', function (req, res) {
     var collection = req.body.collection;
-    var nuevoObjeto = req.body;
-    if(req.file != undefined){
-        nuevoObjeto.foto = req.file.filename;
-    }
-    
-    /*var upload = multer({
-		storage: storage
-    }).single('txtFile')
-    upload(req, res, function(err) {
-		res.end('File is uploaded')
-	})*/
-    
-    jwt.verify(req.token,'secretKey', (error,authData)=>{
-        if(error){
-            res.sendStatus(403);
-        }
-        else{
-            //var collection = req.body.collection;
-            //var nuevoObjeto = req.body;
+    var nuevoObjeto = req.body.heroe;
 
-            require('fs').readFile(__dirname + getPathFromCollection(collection), 'utf8', function (err, data) {
+        require('fs').readFile(__dirname + getPathFromCollection(collection), 'utf8', function (err, data) {
             if (err) {
                  throw err; // error handling
             }else{
                 array = JSON.parse(data);
-                nuevoObjeto.id = getID(array);
-                nuevoObjeto.active = true;
+                //nuevoObjeto.id = getID(array);
+                nuevoObjeto.active = "true";
                 nuevoObjeto.created_dttm = new Date().toLocaleString();
                 array.push(nuevoObjeto);
                 require('fs').writeFileSync(__dirname + getPathFromCollection(collection), JSON.stringify(array));
                 //build response
                 var response = {
                     message: "Alta exitosa",
-                    data: array
                 }
-                io.emit("newpostAlert",{"response":response,data:nuevoObjeto});
                 setTimeout(function(){res.send(response);    },5000);
             }
            
-            });  
-        }
-    });
+        });  
+        
+
 });
 
-app.post('/modificar',verifyToken,multer({storage: storage}).single('txtFile'), function (req, res) {
+app.post('/modificar',function (req, res) {
     var object = req.body;
-    if(req.file != undefined){
-        object.foto = req.file.filename;
-    }
-    jwt.verify(req.token,'secretKey', (error,authData)=>{
-        if(error){
-            res.sendStatus(403);
-        }
-        else{
-            var array = new Array();
-            require('fs').readFile(__dirname + getPathFromCollection(req.body.collection), 'utf8', function (err, data) {
-                if (err) {
+        var array = new Array();
+        require('fs').readFile(__dirname + getPathFromCollection(req.body.collection), 'utf8', function (err, data) {
+            if (err) {
                     // error handling
-                }
-                array = JSON.parse(data);
-                //obtengo index del id que necesito
-                var index = array.findIndex(function(obj){return obj.id === object.id || obj.id.toString() === object.id;})
-                array[index] = object;
+            }
+            array = JSON.parse(data);
+            //obtengo index del id que necesito
+            var index = array.findIndex(function(obj){return obj.id === object.id || obj.id.toString() === object.id;})
+            array[index] = object;
 
-                require('fs').writeFileSync(__dirname + getPathFromCollection(req.body.collection), JSON.stringify(array));
-                res.send('Modificacion exitosa'); 
-            });
-        }
-    });
+            require('fs').writeFileSync(__dirname + getPathFromCollection(req.body.collection), JSON.stringify(array));
+            var response = {
+                message: "Modificacion exitosa",
+            }
+            res.send(response); 
+        });
 });
 
 function getPathFromCollection(collection){
@@ -243,6 +213,9 @@ function getPathFromCollection(collection){
     }
     if(collection==="users"){
         return '/data/users.json';
+    }
+    if(collection==="heroes"){
+        return '/data/heroes.json';
     }
 }
 
