@@ -193,8 +193,11 @@ app.post('/modificar',function (req, res) {
             }
             array = JSON.parse(data);
             //obtengo index del id que necesito
-            var index = array.findIndex(function(obj){return obj.id === object.id || obj.id.toString() === object.id;})
-            array[index] = object;
+            var index = array.findIndex(function(obj){return obj.id === object.heroe.id || obj.id.toString() === object.heroe.id;})
+            var aux = array[index];
+            object.heroe.active = aux.active;
+            object.heroe.created_dttm=aux.created_dttm;
+            array[index] = object.heroe;
 
             require('fs').writeFileSync(__dirname + getPathFromCollection(req.body.collection), JSON.stringify(array));
             var response = {

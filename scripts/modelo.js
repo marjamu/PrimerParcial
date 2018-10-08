@@ -78,7 +78,7 @@ function eliminarPersonaje() {
 }
 
 function modificarPersonaje() {
-
+    //
     var id = parseInt(document.getElementById('id').value);
     var nombre = document.getElementById('nombre').value;
     var apellido = document.getElementById('apellido').value;

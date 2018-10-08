@@ -27,7 +27,7 @@ function darAlta(e) {
     e.preventDefault();
 
     $('#divFrm').hide("slow");
-
+    setSpinner();
     ejecutarTransaccion("Alta");
 }
 
@@ -124,6 +124,10 @@ function mostrarFormulario(heroe) {
 
 }
 
+function setSpinner(){
+    var cuerpoTabla = document.getElementById('bodyTabla');
+    cuerpoTabla.innerHTML = '<img src="images/spinner.gif"/>'
+}
 function actualizarTabla(lista) {
 
     var cuerpoTabla = document.getElementById('bodyTabla');
