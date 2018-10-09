@@ -3,111 +3,12 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var bodyParser = require('body-parser');
-var jwt = require('jsonwebtoken');
-var multer = require('multer');
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, './uploads')
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.originalname);
-    }
-  })
-
 
 //app.use(express.static(__dirname));
 app.use(express.static(__dirname, {index: 'index.html'}))
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-app.get('/admin.html',function(){
-    console.log("pide admin.html");
-});
-
-app.get('/',function(req,res){
-    res.sendFile(__dirname + '/login.html');
-});
-
-app.get('/login',function(req,res){
-    res.sendFile(__dirname + '/login.html');
-});
-
-app.get('/admin',function(req,res){
-    res.sendFile(__dirname + '/admin.html');
-});
-
-io.on('connection', function(socket){
-    console.log('a user connected');
-    socket.on('disconnect', function(){
-      console.log('user disconnected');
-    });
-    socket.on("holamundo",function(message){
-        console.log(message);
-    })
-  });
-
-  app.post('/validate',verifyToken, function (req, res) {
-          
-    jwt.verify(req.token,'secretKey', (error,authData)=>{
-        if(error){
-            res.sendStatus(403);
-        }
-        else{
-
-                setTimeout(function(){res.send("OK");    },0);
-            }
-           
-    });  
-        
-});
-
-  app.post('/login', function (req, res) {
-    //MOCK USER
-    var u = req.body;
-    var user;
-    require('fs').readFile(__dirname + getPathFromCollection(req.body.collection), 'utf8', function (err, data) {
-        if (err) {
-            throw err; 
-        }
-        else if(data === undefined){
-            throw("No se encontro la data solicitada");
-        }
-
-           var array = JSON.parse(data);
-           array = array.filter(function(a){
-             //return a.active == true && a.password == u['data[password]'] && a.name == u['data[usuario]'];
-             return a.active == true && a.password == u.data.password && a.name == u.data.usuario;
-           });
-           
-           if(array.length==0){
-            res.sendStatus(403);
-           }
-           else if(array>1){
-            res.sendStatus(500);
-           }
-           else{
-               user = array[0];
-           
-           //setTimeout(function(){res.send({"message": "Carga exitosa","data":array});},5000);
-
-                jwt.sign({user},'secretKey',(err,token) => {
-                    //armo respuesta
-                var rta = {
-                    message: "Log in exitoso",
-                    user: user,
-                    token:token 
-                }
-                    res.append('redirect', 'http://localhost:3000/admin.html');
-                res.send(rta);
-                
-                });
-            }
-    });  
-
-
-  
-}); 
 
 app.get('/traer', function (req, res) {
     var url = require('url');
@@ -125,8 +26,11 @@ app.get('/traer', function (req, res) {
            array = array.filter(function(a){
              return a.active == true || a.active == "true";
            });
-           
-           setTimeout(function(){res.send({"message": "Carga exitosa","data":array});},5000);
+           var response = {
+                message: "Carga exitosa",
+                "data":array
+           }
+           setTimeout(function(){res.send(response);},5000);
     });  
 });
 
@@ -144,20 +48,14 @@ app.post('/eliminar', function (req, res) {
            });
           remove(objectToDelete[0]);
           require('fs').writeFileSync(__dirname + getPathFromCollection(req.body.collection), JSON.stringify(array));
-          res.send({"message":"Baja exitosa"}); 
+          var response = {
+              message:"Baja exitosa"
+            }
+          res.send(response); 
     });  
 
 });
 
-app.post('/upload', function(req, res) {
-	var upload = multer({
-		storage: storage
-    }).single('txtFile')
-    upload(req, res, function(err) {
-		res.end('File is uploaded')
-	})
-
-})
 app.post('/agregar', function (req, res) {
     var collection = req.body.collection;
     var nuevoObjeto = req.body.heroe;
@@ -224,22 +122,6 @@ function getPathFromCollection(collection){
 
 function remove(a){
     a.active = false;
-}
-
-//FORMAT OF TOKEN
-//Authorization : Bearer <access_token>
-function verifyToken(req,res,next){
-    //get auth header value
-    var bearerHeader = req.headers['authorization'];
-
-    if(bearerHeader!=""){
-        req.token = bearerHeader;
-        next();
-    }
-    else{
-        //Forbidden
-        res.sendStatus(403);
-    }
 }
 
 function getID(array){
