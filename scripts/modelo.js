@@ -73,8 +73,6 @@ function eliminarPersonaje() {
     ejecutarTransaccion("Eliminar", heroe);
 
     $('#divFrm').hide("slow");
-    $('#divTabla').slideDown("slow");
-
 }
 
 function modificarPersonaje() {
@@ -99,6 +97,5 @@ function modificarPersonaje() {
     ejecutarTransaccion("Modificar", personajeModificado);
 
     $('#divFrm').hide("slow");
-    $('#divTabla').slideDown("slow");
 
 }

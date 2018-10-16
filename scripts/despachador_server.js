@@ -44,6 +44,7 @@ function insertarHeroe(heroe) {
         },
         complete:function(jqXHR, textStatus){
             console.log(textStatus);
+            ejecutarTransaccion('actualizarLista');
         }
     });
 }

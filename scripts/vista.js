@@ -17,24 +17,24 @@ function asignarEventos() {
     btnAlta.onclick = function () {
         ejecutarTransaccion("Mostrar");
     }
-
+    
+    showSpinner($("#tablaLista"),$("#divTabla"));
     ejecutarTransaccion("actualizarLista");
 
 }
 
-function darAlta(e) {
-
+function darAlta(e) {    
+    showSpinner($("#tablaLista"),$("#divTabla"));
     e.preventDefault();
 
     $('#divFrm').hide("slow");
-    setSpinner();
     ejecutarTransaccion("Alta");
 }
 
 function mostrarFormulario(heroe) {
 
     var formulario = "";
-    formulario += '<form action="" method="POST" id="frmAlta" height="500px" width="1000px">';
+    formulario += '<form action="" method="POST" id="frmAlta">';
     formulario += '<table id="tablaFormulario">';
     formulario += '<tr><td><label for="id">Id: </label></td>';
     formulario += '<td><input type="text" name="id" id="id" autocomplete="off" pattern="[0-9]{3}" title="El id debe tener 3 digitos"  required></td></tr>';
@@ -71,16 +71,15 @@ function mostrarFormulario(heroe) {
             document.getElementById('rdoVillano').checked = true;
         }
 
-        $('#divFrm').show("slow");
-        $('#divTabla').slideUp("slow");  
-        
+        $('#divFrm').show("slow");        
 
         document.getElementById("id").readOnly = true;
         document.getElementById('nombre').focus();
 
         document.getElementById('btnEliminar').addEventListener('click', function () {
 
-            if (confirm("Esta seguro que desea eliminar a " + heroe.alias + "?")) {
+            if (confirm("Esta seguro que desea eliminar a " + heroe.alias + "?")) {    
+                showSpinner($("#tablaLista"),$("#divTabla"));
                 ejecutarTransaccion("Baja");
             }
             return false;
@@ -89,7 +88,8 @@ function mostrarFormulario(heroe) {
 
         document.getElementById('btnModificar').addEventListener('click', function () {
 
-            if (confirm("Esta seguro que desea modificar a " + heroe.alias + "?")) {
+            if (confirm("Esta seguro que desea modificar a " + heroe.alias + "?")) {    
+                showSpinner($("#tablaLista"),$("#divTabla"));
                 ejecutarTransaccion("Modificacion");
             }
             return false;
@@ -109,7 +109,6 @@ function mostrarFormulario(heroe) {
         frmAlta.addEventListener('submit', darAlta, false);
 
         $('#divFrm').show("slow");
-        $('#divTabla').slideUp("slow");
 
         document.getElementById('id').focus();
 
@@ -124,12 +123,23 @@ function mostrarFormulario(heroe) {
 
 }
 
-function setSpinner(){
-    var cuerpoTabla = document.getElementById('bodyTabla');
-    cuerpoTabla.innerHTML = '<img src="images/spinner.gif"/>'
-}
-function actualizarTabla(lista) {
+const showSpinner = (containerToHide, containerToAttachSpinner, css) => {
+    if(containerToHide){
+        containerToHide.hide();
+    }
+    let image = `<img src="./images/spinner.gif" alt="" id="spinner"></img>`;
+    let div = `<div class="spinnerContainer`;
+    div += css ?  ` ${css}">` : `">`;
+    div += image + `</div>`;
+    containerToAttachSpinner.append(div);
+};
 
+const closeSpinner = containerToShow => {
+    $(".spinnerContainer").remove();
+    containerToShow.show("slow");
+};
+
+function actualizarTabla(lista) {
     var cuerpoTabla = document.getElementById('bodyTabla');
 
     var filasTabla = "";
@@ -156,6 +166,7 @@ function agregarManejadoresCeldas() {
     }
     // cambio el puntero del mouse para el cuerpo de la tabla
     $("#bodyTabla").css("cursor", "pointer");
+    closeSpinner($("#tablaLista"));
 }
 
 
