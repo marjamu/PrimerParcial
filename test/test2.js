@@ -99,27 +99,31 @@ casper.test.begin('Resurrectio test', function(test) {
   /* casper.then(function(){
         this.click('#btnAgregar');
    });*/
-   casper.then(function(){
+   
+   /*casper.then(function(){
         casper.wait(10000, function(){
             var tr_array = document.querySelectorAll("#bodyTabla");
-            this.echo("cantidad de elementos encontrados: " + tr_array.children.length);
+            this.echo("tr_array: " + tr_array);
+            this.echo("cantidad de elementos encontrados: " + tr_array.length);
             this.echo(last_tr.children[0].textContent);
             var last_tr = tr_array[tr_array.length -1];
              this.echo(last_tr.children[0].textContent);
             this.assert(last_tr.children[0].textContent == "0");
         })
-   });
+   });*/
 
- /*  casper.waitForSelector("thead",
+   casper.waitForSelector("#bodyTabla tr td",
         function success() {
-            var tr_array = document.querySelectorAll("tbody tr");
+            this.echo("success");
+            var tr_array = document.querySelectorAll("#bodyTabla");
+            this.echo("cantidad de elementos: " + tr_array.length)
             var last_tr = tr_array[tr_array.length -1];
              this.echo(last_tr.children[0].textContent);
             this.assert(last_tr.children[0].textContent == "0");
         },
         function fail() {
          this.echo("todo mal");
-    });*/
+    });
   
 
    casper.run(function() {test.done();});
