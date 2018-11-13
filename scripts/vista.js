@@ -20,6 +20,8 @@ function asignarEventos() {
 
     ejecutarTransaccion("actualizarLista");
 
+    ejecutarTransaccion("actualizarPublicidades");
+
 }
 
 function darAlta(e) {
@@ -158,4 +160,9 @@ function agregarManejadoresCeldas() {
     $("#bodyTabla").css("cursor", "pointer");
 }
 
+function actualizarPublicidades(lista){
+    setTimeout(function(){
+        $("#publicidad").attr("src",lista.imagen);
+    },3000);
+}
 

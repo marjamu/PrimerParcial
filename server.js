@@ -106,17 +106,11 @@ app.post('/modificar',function (req, res) {
 });
 
 function getPathFromCollection(collection){
-    if(collection==="Personas"){
-        return '/data/people.json';
-    }
-    if(collection==="posts"){
-        return '/data/posts.json';
-    }
-    if(collection==="users"){
-        return '/data/users.json';
-    }
     if(collection==="heroes"){
         return '/data/heroes.json';
+    }
+    if(collection==="publicidades"){
+        return '/data/publicidades.json';
     }
 }
 

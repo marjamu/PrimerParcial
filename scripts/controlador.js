@@ -49,6 +49,9 @@ function ejecutarTransaccion(transaccion, heroe) {
             break;*/
             traerListaHeroes(manejarActualizarLista);
             break;
+        case "actualizarPublicidades":
+            traer(manejarPublicidades,"publicidades");
+            break;
     }
 
 }
@@ -56,6 +59,11 @@ function ejecutarTransaccion(transaccion, heroe) {
 function manejarActualizarLista(l){
     lista = l;
     actualizarTabla(lista);
+}
+
+function manejarPublicidades(l){
+    lista = l;
+    actualizarPublicidades(lista);
 }
 
 

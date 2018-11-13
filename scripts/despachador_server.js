@@ -99,3 +99,21 @@ function modificarHeroe(heroe) {
     });
 
 }
+//hacer una funcion generica, que pueda traer publicidades
+function traer(callback,collection) {
+    xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if (this.readyState == 4) {
+            if(this.status == 200){
+                var resp = JSON.parse(this.response); 
+                console.log(resp.message);
+                callback(resp.data);
+            }
+        }
+        return null;
+    };
+    var url = server_url + "traer?collection="+ collection;
+    xhr.open("GET",url,true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send();
+}
