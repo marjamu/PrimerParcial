@@ -82,9 +82,12 @@ app.post('/agregar', function (req, res) {
 
 });
 
+
 app.post('/modificar',function (req, res) {
+    
     var object = req.body;
         var array = new Array();
+
         require('fs').readFile(__dirname + getPathFromCollection(req.body.collection), 'utf8', function (err, data) {
             if (err) {
                     // error handling

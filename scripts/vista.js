@@ -47,7 +47,7 @@ function mostrarFormulario(heroe) {
     formulario += '<tr><td><label for="edad">Edad: </label></td>';
     formulario += '<td><input type="text" name="edad" id="edad" autocomplete="off" pattern="[0-9]{1,3}" title="La edad debe tener entre 1 y 3 digitos" required></td></tr>';
     formulario += '<tr><td><label for="edad">Editorial: </label></td>';
-    formulario += '<td><select name="editorial" id="selEditorial"> <option value="dc">DC</option><option value="marvel">Marvel</option></select></td></tr>';
+    formulario += '<td><select name="editorial" id="selEditorial"> <option value="dc">DC</option><option value="marvel">Marvel</option><option value="otro">Otro</option></select></td></tr>';
     formulario += '<tr><td><input type="radio" name="lado" id="rdoHeroe" value="Heroe" checked>Heroe</td>';
     formulario += '<td><input type="radio" name="lado" id="rdoVillano" value="Villano">Villano</td></tr>';
 
@@ -72,7 +72,14 @@ function mostrarFormulario(heroe) {
         else {
             document.getElementById('rdoVillano').checked = true;
         }
-
+        if(heroe.editorial == undefined){
+            /*if(confirm("Se ha puesto 'Otro' como valor por defecto. Deberá guardar los cambios")){
+                ejecutarTransaccion("actualizarPersonajes","editorial","otro");
+            }*/
+            alert("Se ha puesto 'Otro' como valor por defecto. Deberá guardar los cambios")
+            heroe.editorial = "otro";
+        }
+        document.getElementById('selEditorial').value = heroe.editorial;
         $('#divFrm').show("slow");
         $('#divTabla').slideUp("slow");  
         
@@ -137,7 +144,8 @@ function actualizarTabla(lista) {
     var filasTabla = "";
 
     for (var i = 0; i < lista.length; i++) {
-        filasTabla += "<tr><td>" + lista[i]['id'] + "</td><td>" + lista[i]['nombre'] + "</td><td>" + lista[i]['apellido'] + "</td><td>" + lista[i]['alias'] + "</td><td>" + lista[i]['edad'] + "</td><td>" + lista[i]['lado'] + "</td></tr>";
+        var editorial = lista[i]['editorial']!=undefined?lista[i]['editorial']:'No definido'
+        filasTabla += "<tr><td>" + lista[i]['id'] + "</td><td>" + lista[i]['nombre'] + "</td><td>" + lista[i]['apellido'] + "</td><td>" + lista[i]['alias'] + "</td><td>" + lista[i]['edad'] + "</td><td>" + lista[i]['lado'] + "</td><td>" + editorial + "</td></tr>";
     }
 
     cuerpoTabla.innerHTML = filasTabla;

@@ -1,12 +1,13 @@
 var lista;
 
-function Personaje(id, nombre, apellido, alias, edad, lado) {
+function Personaje(id, nombre, apellido, alias, edad, lado,editorial) {
     this.id = id;
     this.nombre = nombre;
     this.apellido = apellido;
     this.alias = alias;
     this.edad = edad;
     this.lado = lado;
+    this.editorial = editorial;
 }
 
 function buscarHeroe(heroes, id) {
@@ -56,8 +57,8 @@ function altaPersonaje() {
     else {
         lado = document.getElementById('rdoVillano').value;
     }
-
-    var nuevoPersonaje = new Personaje(id, nombre, apellido, alias, edad, lado);
+    var editorial = document.getElementById('selEditorial').value;
+    var nuevoPersonaje = new Personaje(id, nombre, apellido, alias, edad, lado,editorial);
 
     ejecutarTransaccion("Insertar", nuevoPersonaje);
 }
@@ -91,8 +92,8 @@ function modificarPersonaje() {
     else {
         lado = document.getElementById('rdoVillano').value;
     }
-
-    var personajeModificado = new Personaje(id, nombre, apellido, alias, edad, lado);
+    var editorial = document.getElementById('selEditorial').value;
+    var personajeModificado = new Personaje(id, nombre, apellido, alias, edad, lado,editorial);
 
     console.log(personajeModificado);
 
@@ -102,3 +103,16 @@ function modificarPersonaje() {
     $('#divTabla').slideDown("slow");
 
 }
+/*
+function actualizarPersonajes(atributo, valor){
+    for(var i=0;i<lista.length;i++){
+        if(lista[i][atributo] == undefined){
+            lista[i][atributo] = valor;
+            ejecutarTransaccion("Modificar", lista[i]);
+        }
+    }
+    $('#divFrm').hide("slow");
+    $('#divTabla').slideDown("slow");
+
+}
+*/

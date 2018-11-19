@@ -49,6 +49,9 @@ function ejecutarTransaccion(transaccion, heroe) {
             break;*/
             traerListaHeroes(manejarActualizarLista);
             break;
+       /* case "actualizarPersonajes":
+            actualizarPersonajes(arguments[1],arguments[2]);
+            break;*/
     }
 
 }
