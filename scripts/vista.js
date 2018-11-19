@@ -46,6 +46,8 @@ function mostrarFormulario(heroe) {
     formulario += '<td> <input type="text" name="alias" id="alias" autocomplete="off" pattern="[a-zA-Z]{3,10}" title="El alias debe tener solo letras y una longitud entre 3 y 10 caracteres" required></td></tr>';
     formulario += '<tr><td><label for="edad">Edad: </label></td>';
     formulario += '<td><input type="text" name="edad" id="edad" autocomplete="off" pattern="[0-9]{1,3}" title="La edad debe tener entre 1 y 3 digitos" required></td></tr>';
+    formulario += '<tr><td><label for="edad">Editorial: </label></td>';
+    formulario += '<td><select name="editorial" id="selEditorial"> <option value="dc">DC</option><option value="marvel">Marvel</option></select></td></tr>';
     formulario += '<tr><td><input type="radio" name="lado" id="rdoHeroe" value="Heroe" checked>Heroe</td>';
     formulario += '<td><input type="radio" name="lado" id="rdoVillano" value="Villano">Villano</td></tr>';
 
