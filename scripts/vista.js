@@ -4,6 +4,7 @@ var frmAlta;
 var divInfo;
 var btnCancelar;
 
+
 window.onload = asignarEventos;
 
 function asignarEventos() {
@@ -18,7 +19,16 @@ function asignarEventos() {
         ejecutarTransaccion("Mostrar");
     }
 
+    document.getElementById("selTipo").onchange = function(e,otro){
+        var lista_filtrados = lista.filter(function(item){
+            return item.lado == e.target.value;
+        });
+        console.log(lista_filtrados);
+        actualizarTabla(lista_filtrados);
+        
+    }
     ejecutarTransaccion("actualizarLista");
+    actualizarFiltro(lista);
 
 }
 
@@ -138,7 +148,7 @@ function setSpinner(){
     cuerpoTabla.innerHTML = '<img src="images/spinner.gif"/>'
 }
 function actualizarTabla(lista) {
-
+    lista_datos = lista;
     var cuerpoTabla = document.getElementById('bodyTabla');
 
     var filasTabla = "";
@@ -153,7 +163,27 @@ function actualizarTabla(lista) {
     $('#divTabla').fadeIn("slow");
 
     agregarManejadoresCeldas();
+    actualizarMetricas(lista);
+}
 
+function actualizarMetricas(lista){
+    var edad_promedio = lista.reduce(function(prev,actual){
+            return prev + actual.edad;
+    },0)/lista.length;
+
+    document.getElementById("txtPromedio").value = edad_promedio;
+}
+
+function actualizarFiltro(lista){
+    var lados = lista.map(function(value){
+        return value.lado;
+    })
+    let lados_unicos = [...new Set(lados)]; 
+    var options_builder;
+    for(var i=0;i<lados_unicos.length;i++){
+        options_builder+='<option value="' + lados_unicos[i] + '">' + lados_unicos[i] + '</option>'
+    }
+    document.getElementById("selTipo").innerHTML += options_builder;
 }
 
 function agregarManejadoresCeldas() {

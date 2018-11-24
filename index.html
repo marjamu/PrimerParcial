@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/estilos.css">
     <script src="./scripts/jquery.js"></script>
     <script src="./scripts/modelo.js"></script>
     <script src="./scripts/vista.js"></script>
     <script src="./scripts/controlador.js"></script>
-    <script src="./scripts/despachador_server.js"></script>
+    <script src="./scripts/despachador.js"></script>
     <title>ABM SuperHeroes</title>
 </head>
 
@@ -24,9 +25,29 @@
         <input type="button" value="Agregar" id="btnAlta" class="puntero">
     </nav>
 
-    <div id="divFrm" class="frmAlta" hidden>
-
+    <div class="row" id="divFilter" >
+        <div class="col-md-6">
+                <div >
+                        <label for="">Filtrar por Tipo</label>
+                        <select name="tipo" id="selTipo" class="form-control">
+                            <option value="nada" disabled selected >Seleccionar...</option>
+                        </select>
+                </div>
+        </div>
+        <div class="col-md-6">
+                <div id="divInsights">
+                        <label for="">Promedio de Edad: </label>
+                        <input type="text" name="promedio" id="txtPromedio" class="form-control" readonly>
+                        <label for="">Heroe mas viejo: </label>
+                        <input type="text" name="masViejo" id="txtMasViejo" class="form-control" readonly>
+                </div>
+        </div>
+        
     </div>
+
+            
+
+    
     <div id="divTabla">
         <table id="tablaLista">
             <thead>
@@ -46,6 +67,9 @@
         </table>
 
     </div>
+    <div id="divFrm" class="frmAlta frmhidden" >
+
+        </div>
 </body>
 
 </html>

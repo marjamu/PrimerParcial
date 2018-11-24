@@ -2,7 +2,7 @@
 // estas funciones utilizan el localStorage. Habria que hace un despachador con las mismas funciones pero que le peguen al servidor
 
 
-function traerListaHeroes() {
+function traerListaHeroes(callback) {
 
     // Acá va el código de la peticion ajax de la ista de heroes al servidor (GET)
 
@@ -13,7 +13,7 @@ function traerListaHeroes() {
         listaHeroes = [];
     }
 
-    return listaHeroes;
+    callback(listaHeroes);
 }
 
 function insertarHeroe(heroe) {

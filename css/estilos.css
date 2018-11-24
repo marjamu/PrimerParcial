@@ -10,7 +10,10 @@
     transform: translate(-50%, -50%);
     color: rgb(199, 52, 33);
     font-weight: bold;   
+}
 
+.frmhidden{
+    display: none;
 }
 
 form table{
@@ -92,4 +95,11 @@ nav{
     cursor: pointer;
 }
 
+#divFilter{
+    
+    background-color: lightsalmon;
+    margin-left: 0;
+    margin-right: 0;
+    padding-bottom: 15px;
+}
 
