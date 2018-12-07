@@ -1,9 +1,9 @@
-var btnAlta;
+class Vista{
+    var btnAlta;
 var divFrm;
 var frmAlta;
 var divInfo;
 var btnCancelar;
-
 
 window.onload = asignarEventos;
 
@@ -19,16 +19,7 @@ function asignarEventos() {
         ejecutarTransaccion("Mostrar");
     }
 
-    document.getElementById("selTipo").onchange = function(e,otro){
-        var lista_filtrados = lista.filter(function(item){
-            return item.lado == e.target.value;
-        });
-        console.log(lista_filtrados);
-        actualizarTabla(lista_filtrados);
-        
-    }
     ejecutarTransaccion("actualizarLista");
-    actualizarFiltro(lista);
 
 }
 
@@ -41,7 +32,7 @@ function darAlta(e) {
     ejecutarTransaccion("Alta");
 }
 
-function mostrarFormulario(heroe) {
+public function mostrarFormulario(heroe?:Heroe):void {
 
     var formulario = "";
     formulario += '<form action="" method="POST" id="frmAlta" height="500px" width="1000px">';
@@ -148,7 +139,7 @@ function setSpinner(){
     cuerpoTabla.innerHTML = '<img src="images/spinner.gif"/>'
 }
 function actualizarTabla(lista) {
-    lista_datos = lista;
+
     var cuerpoTabla = document.getElementById('bodyTabla');
 
     var filasTabla = "";
@@ -163,44 +154,7 @@ function actualizarTabla(lista) {
     $('#divTabla').fadeIn("slow");
 
     agregarManejadoresCeldas();
-    actualizarMetricas(lista);
-}
 
-function actualizarMetricas(lista){
-    actualizarPromedioEdad(lista);
-    actualizaPersonajeMasGrande(lista);   
-}
-
-function actualizarPromedioEdad(lista){
-    var edad_promedio = lista.reduce(function(prev,actual){
-        return prev + actual.edad;
-    },0)/lista.length;
-    edad_promedio = edad_promedio.toFixed(2);
-    document.getElementById("txtPromedio").value = edad_promedio;
-}
-function actualizaPersonajeMasGrande(lista){
-    var personaje_viejo = lista.reduce(function(prev,actual){
-        if(prev){
-            if(prev.edad > actual.edad){
-                return prev;
-            }
-            else return actual;
-        }
-    },{edad:0,alias:"vacio"});
-
-    document.getElementById("txtMasViejo").value = personaje_viejo.alias;
-}
-
-function actualizarFiltro(lista){
-    var lados = lista.map(function(value){
-        return value.lado;
-    })
-    let lados_unicos = [...new Set(lados)]; 
-    var options_builder;
-    for(var i=0;i<lados_unicos.length;i++){
-        options_builder+='<option value="' + lados_unicos[i] + '">' + lados_unicos[i] + '</option>'
-    }
-    document.getElementById("selTipo").innerHTML += options_builder;
 }
 
 function agregarManejadoresCeldas() {
@@ -216,3 +170,5 @@ function agregarManejadoresCeldas() {
 }
 
 
+
+}

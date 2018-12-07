@@ -1,0 +1,123 @@
+class Modelo{
+    public _lista:Heroe[];
+    private constructor(lista:Heroe[]){
+        this._lista=lista;
+    }
+
+    public getLista():Heroe[]{
+        return _lista;
+    }
+
+    private buscar(id:number):Heroe|null{
+        let heroe:Heroe|null=null;
+
+        for (var i = 0; i < getLista().length; i++) {
+    
+            if (getLista()[i]['id'] == id) {
+                heroe = getLista()[i];
+                break;
+            }
+        }
+        return heroe;
+    }
+
+    public traerIdHeroe(e:any) {
+
+        var texto = "";
+        var td = e.target;
+        var fila = td.parentElement;
+        var celda = fila.firstChild;
+        var id = parseInt(celda.textContent);
+        var heroe = buscar(id);
+    
+        ejecutarTransaccion("MostrarHeroe", heroe);
+    
+    }
+
+    public static alta(){
+        //to-do: refactorizar. no acceder a la vista desde el modelo. 
+        var id = parseInt(document.getElementById('id').value);
+        var nombre = document.getElementById('nombre').value;
+        var apellido = document.getElementById('apellido').value;
+        var alias = document.getElementById('alias').value;
+        var edad = parseInt(document.getElementById('edad').value);
+        var lado;
+        if (document.getElementById('rdoHeroe').checked) {
+            lado = document.getElementById('rdoHeroe').value;
+        }
+        else {
+            lado = document.getElementById('rdoVillano').value;
+        }
+        var editorial = document.getElementById('selEditorial').value;
+        var nuevoHeroe = new Heroe(id, nombre, apellido, alias, edad, lado,editorial);
+    
+        ejecutarTransaccion("Insertar", nuevoHeroe);
+    }   
+
+}
+class Personaje{
+    private id:number;
+    private nombre:string;
+    private apellido:string;
+    private edad:number;
+
+    constructor(id:number,nombre:string,apellido:string,edad:number){
+        this.id=id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.edad = edad;
+    }
+}
+
+class Heroe extends Personaje{
+    private alias:string;
+    private lado:string;
+    private editorial:string;
+
+    constructor(id:number,nombre:string,apellido:string,alias:string,edad:number,lado:string,editorial:string){
+        super(id,nombre,apellido,edad);
+        this.alias = alias;
+        this.lado = lado;
+        this.editorial = editorial;
+    }
+}
+
+function eliminarPersonaje() {
+
+
+    var id = parseInt(document.getElementById('id').value);
+
+    var heroe = lista[buscarHeroe(lista, id)];
+
+    ejecutarTransaccion("Eliminar", heroe);
+
+    $('#divFrm').hide("slow");
+    $('#divTabla').slideDown("slow");
+
+}
+
+function modificarPersonaje() {
+    //
+    var id = parseInt(document.getElementById('id').value);
+    var nombre = document.getElementById('nombre').value;
+    var apellido = document.getElementById('apellido').value;
+    var alias = document.getElementById('alias').value;
+    var edad = parseInt(document.getElementById('edad').value);
+    var lado;
+    if (document.getElementById('rdoHeroe').checked) {
+        lado = document.getElementById('rdoHeroe').value;
+    }
+    else {
+        lado = document.getElementById('rdoVillano').value;
+    }
+    var editorial = document.getElementById('selEditorial').value;
+    var personajeModificado = new Personaje(id, nombre, apellido, alias, edad, lado,editorial);
+
+    console.log(personajeModificado);
+
+    ejecutarTransaccion("Modificar", personajeModificado);
+
+    $('#divFrm').hide("slow");
+    $('#divTabla').slideDown("slow");
+
+}

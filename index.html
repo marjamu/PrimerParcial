@@ -38,35 +38,68 @@
                 <div id="divInsights">
                         <label for="">Promedio de Edad: </label>
                         <input type="text" name="promedio" id="txtPromedio" class="form-control" readonly>
-                        <label for="">Heroe mas viejo: </label>
+                        <label for="">Personaje mas viejo: </label>
                         <input type="text" name="masViejo" id="txtMasViejo" class="form-control" readonly>
                 </div>
         </div>
         
     </div>
 
-            
+    <div id="divColumnas">        
+    <h3>Campos mostrados
+            <small>Tildar los campos a mostrar</small>
+        </h3>
+        <hr>
+        <div class="form-check form-check-inline">
+            <input type="checkbox" id="chkId" class="form-check-input" checked>
+            <label for="chkId" class="form-check-label"> Id </label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="checkbox" id="chkName" class="form-check-input" checked>
+            <label for="chkName" class="form-check-label"> Nombre </label>
+        </div>
+        <div class="form-check form-check-inline">
+                <input type="checkbox" id="chkApellido" class="form-check-input" checked>
+                <label for="chkApellido" class="form-check-label"> Apellido </label>
+            </div>
+        <div class="form-check form-check-inline">
+                    <input type="checkbox" id="chkAlias" class="form-check-input" checked>
+                    <label for="chkAlias" class="form-check-label"> Alias </label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="checkbox" id="chkEdad" class="form-check-input" checked>
+            <label for="chkEdad" class="form-check-label"> Edad: </label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="checkbox" id="chkLado" class="form-check-input" checked>
+            <label for="chkLado" class="form-check-label"> Lado </label>
+        </div>
+        <div class="form-check form-check-inline">
+                <input type="checkbox" id="chkEditorial" class="form-check-input" checked>
+                <label for="chkEditorial" class="form-check-label"> Editorial </label>
+        </div>
 
-    
-    <div id="divTabla">
-        <table id="tablaLista">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Alias</th>
-                    <th>Edad</th>
-                    <th>Lado</th>
-                    <th>Editorial</th>
-                </tr>
-            </thead>
-            <tbody id="bodyTabla">
-
-            </tbody>
-        </table>
-
+        <div id="divTabla">
+                <table id="tablaLista">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Alias</th>
+                            <th>Edad</th>
+                            <th>Lado</th>
+                            <th>Editorial</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bodyTabla">
+        
+                    </tbody>
+                </table>
+        
+            </div>
     </div>
+    
     <div id="divFrm" class="frmAlta frmhidden" >
 
         </div>
